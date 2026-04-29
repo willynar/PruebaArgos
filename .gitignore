@@ -7,3 +7,7 @@
 /Test/bin/Debug/net8.0
 /Test/bin/Release/net8.0
 /Test/obj
+/.vs
+/Angular/.vscode
+/POCArgos/.vs
+/Test/.vs/Test
