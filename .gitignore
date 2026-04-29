@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/POCArgos/bin/Debug/net8.0
+/POCArgos/obj
+/Test/bin/Debug/net8.0
+/Test/bin/Release/net8.0
+/Test/obj
