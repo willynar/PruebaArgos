@@ -1,0 +1,139 @@
+.pedido-container {
+  max-width: 820px;
+  margin: 30px auto;
+  padding: 0 20px;
+  font-family: Arial, sans-serif;
+}
+
+h2 { font-size: 1.6rem; margin-bottom: 20px; color: #2c3e50; }
+h3  { font-size: 1.15rem; margin: 0; color: #34495e; }
+
+/* ---- Card ---- */
+.card {
+  background: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+.card-edit { border: 2px solid #007bff; box-shadow: 0 4px 12px rgba(0,123,255,0.15); }
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+/* ---- Fila label + botón reload ---- */
+.catalog-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.catalog-label-row label { margin-bottom: 0; }
+
+/* ---- Botón reload compacto ---- */
+.btn-reload {
+  background: transparent;
+  border: 1px solid #6c757d;
+  color: #6c757d;
+  border-radius: 4px;
+  padding: 3px 10px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-reload:hover:not(:disabled) { background: #f1f3f5; }
+.btn-reload:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ---- Badge rendimiento ---- */
+.perf-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 5px;
+  font-size: 0.8rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 0.75rem;
+}
+
+.badge-cache  { background-color: #d1fae5; color: #065f46; }  /* verde */
+.badge-server { background-color: #fef3c7; color: #92400e; }  /* amarillo */
+
+.perf-time { font-weight: bold; color: #374151; }
+.perf-time.muted { color: #9ca3af; font-weight: normal; }
+
+/* ---- Cancelar inline ---- */
+.btn-cancel-inline {
+  background: transparent;
+  border: 1px solid #dc3545;
+  color: #dc3545;
+  border-radius: 4px;
+  padding: 4px 12px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.btn-cancel-inline:hover { background: #f8d7da; }
+
+/* ---- Formulario ---- */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.form-group { margin-bottom: 14px; }
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 0.88rem;
+  color: #555;
+}
+.form-control {
+  width: 100%;
+  padding: 8px 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.95rem;
+}
+.form-control:focus { outline: none; border-color: #007bff; box-shadow: 0 0 0 2px rgba(0,123,255,0.2); }
+
+/* ---- Botones ---- */
+.actions { margin-top: 18px; display: flex; justify-content: flex-end; }
+.btn {
+  padding: 9px 22px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.9rem;
+  transition: opacity 0.15s;
+}
+.btn:disabled  { opacity: 0.55; cursor: not-allowed; }
+.btn-primary   { background-color: #007bff; color: white; }
+.btn-warning   { background-color: #f0a500; color: white; }
+.btn-secondary { background-color: #6c757d; color: white; }
+.btn-sm        { padding: 5px 12px; font-size: 0.82rem; }
+
+/* ---- Tabla ---- */
+.table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-top: 8px; }
+.table th, .table td { border: 1px solid #dee2e6; padding: 9px 12px; text-align: left; }
+.table thead { background-color: #f8f9fa; font-weight: bold; }
+.table tbody tr:hover { background-color: #f1f7ff; }
+.row-selected { background-color: #dbeafe !important; }
+
+/* ---- Alertas ---- */
+.alert { padding: 12px 16px; margin-bottom: 14px; border-radius: 5px; font-size: 0.93rem; }
+.alert-danger  { background-color: #f8d7da; color: #842029; border: 1px solid #f5c2c7; }
+.alert-success { background-color: #d1e7dd; color: #0f5132; border: 1px solid #badbcc; }

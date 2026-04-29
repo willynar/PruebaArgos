@@ -1,0 +1,40 @@
+.app-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  background: #1e293b;
+  color: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.app-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-links a {
+  color: #94a3b8;
+  text-decoration: none;
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.15s, color 0.15s;
+}
+
+.nav-links a:hover {
+  background: #334155;
+  color: white;
+}
+
+.nav-links a.active {
+  background: #3b82f6;
+  color: white;
+}

@@ -1,0 +1,135 @@
+<div class="pedido-container">
+  <h2>Gestión de Pedidos (OmniERP PoC)</h2>
+
+  <!-- Alertas globales -->
+  <div class="alert alert-danger"  *ngIf="mensajeError">{{ mensajeError }}</div>
+  <div class="alert alert-success" *ngIf="mensajeExito">{{ mensajeExito }}</div>
+
+  <!-- ===== FORMULARIO ÚNICO (Crear / Editar) ===== -->
+  <div class="card" [class.card-edit]="modoEditar">
+    <div class="card-header">
+      <h3>
+        <span *ngIf="!modoEditar">Nuevo Pedido</span>
+        <span *ngIf="modoEditar">Editando Pedido #{{ formulario.id }}</span>
+      </h3>
+      <button *ngIf="modoEditar" type="button" class="btn-cancel-inline" (click)="cancelarEdicion()">
+        Cancelar edición
+      </button>
+    </div>
+
+    <form (ngSubmit)="submit()">
+      <div class="form-group">
+        <label>Nombre del Cliente:</label>
+        <input type="text" [(ngModel)]="formulario.customerName" name="customerName"
+          class="form-control" required placeholder="Ej: Juan Pérez" />
+      </div>
+
+      <div class="form-row">
+        <!-- ESTADO -->
+        <div class="form-group">
+          <div class="catalog-label-row">
+            <label>Estado del Pedido:</label>
+            <button type="button" class="btn-reload"
+              [disabled]="estadosMeta.cargando"
+              (click)="cargarEstados(true)"
+              title="Forzar recarga desde servidor (limpia caché)">
+              {{ estadosMeta.cargando ? 'Cargando...' : 'Actualizar' }}
+            </button>
+          </div>
+          <select [(ngModel)]="formulario.orderStatusId" name="orderStatusId"
+            class="form-control" [disabled]="estadosMeta.cargando">
+            <option [ngValue]="0" disabled>-- Seleccione --</option>
+            <option *ngFor="let e of estadosMeta.items" [ngValue]="e.id">{{ e.name }}</option>
+          </select>
+          <!-- Badge de rendimiento -->
+          <div class="perf-badge" *ngIf="estadosMeta.tiempoMs !== null">
+            <span class="perf-time">{{ estadosMeta.tiempoMs }} ms</span>
+          </div>
+          <div class="perf-badge" *ngIf="estadosMeta.cargando">
+            <span class="perf-time muted">Midiendo...</span>
+          </div>
+        </div>
+
+        <!-- MÉTODO DE ENVÍO -->
+        <div class="form-group">
+          <div class="catalog-label-row">
+            <label>Método de Envío:</label>
+            <button type="button" class="btn-reload"
+              [disabled]="metodosMeta.cargando"
+              (click)="cargarMetodosEnvio(true)"
+              title="Forzar recarga desde servidor (limpia caché)">
+              {{ metodosMeta.cargando ? 'Cargando...' : 'Actualizar' }}
+            </button>
+          </div>
+          <select [(ngModel)]="formulario.shippingMethodId" name="shippingMethodId"
+            class="form-control" [disabled]="metodosMeta.cargando">
+            <option [ngValue]="0" disabled>-- Seleccione --</option>
+            <option *ngFor="let m of metodosMeta.items" [ngValue]="m.id">{{ m.name }}</option>
+          </select>
+          <!-- Badge de rendimiento -->
+          <div class="perf-badge" *ngIf="metodosMeta.tiempoMs !== null">
+            <span class="perf-time">{{ metodosMeta.tiempoMs }} ms</span>
+          </div>
+          <div class="perf-badge" *ngIf="metodosMeta.cargando">
+            <span class="perf-time muted">Midiendo...</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Total (USD):</label>
+        <input type="number" [(ngModel)]="formulario.totalAmount" name="totalAmount"
+          class="form-control" min="0" step="0.01" />
+      </div>
+
+      <div class="actions">
+        <button type="submit" class="btn"
+          [class.btn-primary]="!modoEditar"
+          [class.btn-warning]="modoEditar"
+          [disabled]="guardando || cargandoCatalogos">
+          <span *ngIf="guardando">Guardando...</span>
+          <span *ngIf="!guardando && !modoEditar">Crear Pedido</span>
+          <span *ngIf="!guardando && modoEditar">Guardar Cambios</span>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- ===== LISTA DE PEDIDOS ===== -->
+  <div class="card">
+    <div class="card-header">
+      <h3>Pedidos Existentes</h3>
+      <button type="button" class="btn-reload" (click)="cargarPedidos()" [disabled]="cargando">
+        {{ cargando ? 'Cargando...' : 'Actualizar lista' }}
+      </button>
+    </div>
+    <p *ngIf="cargando">Cargando pedidos...</p>
+    <p *ngIf="!cargando && pedidos.length === 0">No hay pedidos registrados.</p>
+    <table *ngIf="pedidos.length > 0" class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Cliente</th>
+          <th>Estado</th>
+          <th>Envío</th>
+          <th>Total</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of pedidos" [class.row-selected]="formulario.id === p.id">
+          <td>{{ p.id }}</td>
+          <td>{{ p.customerName }}</td>
+          <td>{{ p.orderStatus?.name ?? p.orderStatusId }}</td>
+          <td>{{ p.shippingMethod?.name ?? p.shippingMethodId }}</td>
+          <td>{{ p.totalAmount | currency }}</td>
+          <td>
+            <button type="button" class="btn btn-secondary btn-sm" (click)="seleccionarPedido(p)">
+              Editar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
