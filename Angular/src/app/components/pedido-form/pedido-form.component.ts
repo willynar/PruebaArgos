@@ -6,12 +6,6 @@ import { PedidoService } from '../../services/pedido.service';
 import { CatalogoItemDto } from '../../class/catalogo.dto';
 import { OrderDto } from '../../class/pedido.dto';
 
-interface CatalogoMeta {
-  items: CatalogoItemDto[];
-  cargando: boolean;
-  tiempoMs: number | null;
-}
-
 @Component({
   selector: 'app-pedido-form',
   standalone: true,
@@ -21,8 +15,12 @@ interface CatalogoMeta {
 })
 export class PedidoFormComponent implements OnInit {
   // Catálogos
-  estadosMeta: CatalogoMeta = { items: [], cargando: false, tiempoMs: null };
-  metodosMeta: CatalogoMeta  = { items: [], cargando: false, tiempoMs: null };
+  estados: CatalogoItemDto[] = [];
+  metodosEnvio: CatalogoItemDto[] = [];
+
+  // Metadatos para latencia
+  latenciaEstados: number | null = null;
+  latenciaMetodos: number | null = null;
 
   pedidos: OrderDto[] = [];
   formulario: OrderDto = this.formularioVacio();
@@ -31,9 +29,9 @@ export class PedidoFormComponent implements OnInit {
   mensajeExito: string | null = null;
   guardando = false;
   cargando = false;
+  cargandoCatalogos = false;
 
   get modoEditar(): boolean { return this.formulario.id > 0; }
-  get cargandoCatalogos(): boolean { return this.estadosMeta.cargando || this.metodosMeta.cargando; }
 
   constructor(
     private catalogoService: CatalogoService,
@@ -47,32 +45,28 @@ export class PedidoFormComponent implements OnInit {
   }
 
   cargarEstados() {
-    this.estadosMeta = { ...this.estadosMeta, cargando: true, tiempoMs: null };
+    this.cargandoCatalogos = true;
     const inicio = performance.now();
-
     this.catalogoService.getEstados().subscribe({
-      next: (data) => {
-        const ms = Math.round(performance.now() - inicio);
-        this.estadosMeta = { items: data, cargando: false, tiempoMs: ms };
+      next: (data) => { 
+        this.estados = data; 
+        this.latenciaEstados = Math.round(performance.now() - inicio);
+        this.cargandoCatalogos = false;
       },
-      error: () => {
-        this.estadosMeta = { ...this.estadosMeta, cargando: false };
-      }
+      error: () => { this.cargandoCatalogos = false; }
     });
   }
 
   cargarMetodosEnvio() {
-    this.metodosMeta = { ...this.metodosMeta, cargando: true, tiempoMs: null };
+    this.cargandoCatalogos = true;
     const inicio = performance.now();
-
     this.catalogoService.getMetodosEnvio().subscribe({
-      next: (data) => {
-        const ms = Math.round(performance.now() - inicio);
-        this.metodosMeta = { items: data, cargando: false, tiempoMs: ms };
+      next: (data) => { 
+        this.metodosEnvio = data; 
+        this.latenciaMetodos = Math.round(performance.now() - inicio);
+        this.cargandoCatalogos = false;
       },
-      error: () => {
-        this.metodosMeta = { ...this.metodosMeta, cargando: false };
-      }
+      error: () => { this.cargandoCatalogos = false; }
     });
   }
 

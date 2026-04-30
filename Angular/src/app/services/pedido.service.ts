@@ -10,19 +10,19 @@ export class PedidoService {
   constructor(private http: HttpClient) {}
 
   obtenerPedidos(): Observable<OrderDto[]> {
-    return this.http.get<OrderDto[]>(`${environment.apiUrl}/Orders`);
+    return this.http.get<OrderDto[]>(`${environment.baseUrl}/Orders`);
   }
 
   obtenerPedido(id: number): Observable<OrderDto> {
-    return this.http.get<OrderDto>(`${environment.apiUrl}/Orders/${id}`);
+    return this.http.get<OrderDto>(`${environment.baseUrl}/Orders/${id}`);
   }
 
   crearPedido(order: OrderDto): Observable<OrderDto> {
-    return this.http.post<OrderDto>(`${environment.apiUrl}/Orders`, order);
+    return this.http.post<OrderDto>(`${environment.baseUrl}/Orders`, order);
   }
 
   guardarPedido(order: OrderDto): Observable<OrderDto> {
-    return this.http.put<OrderDto>(`${environment.apiUrl}/Orders/${order.id}`, order)
+    return this.http.put<OrderDto>(`${environment.baseUrl}/Orders/${order.id}`, order)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           if (error.status === 409) return throwError(() => new Error('CONFLICTO_CONCURRENCIA'));

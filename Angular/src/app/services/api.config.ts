@@ -1,11 +1,15 @@
-import { environment as envConfig } from '../../environments/environment';
+// Archivo generado automáticamente por scripts/set-env.js
+export interface AppConfig {
+  production: boolean;
+  baseUrl: string;
+  env: string;
+}
 
-// Re-exportar environment para compatibilidad con servicios existentes
-export const environment = envConfig;
-
-// Exportar como apiConfig también
-export const apiConfig = {
-  baseUrl: environment.apiUrl,
-  production: environment.production,
-  env: environment.env
+export const environment: AppConfig = {
+  production: false,
+  baseUrl: 'https://localhost:44380/api',
+  env: 'development'
 };
+
+// Alias para compatibilidad
+export const apiConfig = environment;

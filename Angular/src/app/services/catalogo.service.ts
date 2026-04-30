@@ -10,14 +10,14 @@ export class CatalogoService {
   constructor(private http: HttpClient) {}
 
   getEstados(): Observable<CatalogoItemDto[]> {
-    return this.http.get<CatalogoItemDto[]>(`${environment.apiUrl}/Catalogs/order/status`)
+    return this.http.get<CatalogoItemDto[]>(`${environment.baseUrl}/Catalogs/order/status`)
       .pipe(
         catchError(() => of([]))
       );
   }
 
   getMetodosEnvio(): Observable<CatalogoItemDto[]> {
-    return this.http.get<CatalogoItemDto[]>(`${environment.apiUrl}/Catalogs/shipping/methods`)
+    return this.http.get<CatalogoItemDto[]>(`${environment.baseUrl}/Catalogs/shipping/methods`)
       .pipe(
         catchError(() => of([]))
       );

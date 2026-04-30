@@ -26,20 +26,12 @@ services:
     build:
       context: ./Angular
       dockerfile: Dockerfile
-      args:
-        ANGULAR_APP_API_URL: http://backend-api:8080/api
-        ANGULAR_APP_PRODUCTION: "true"
-        ANGULAR_APP_ENV: production
     container_name: omni-erp-frontend
     ports:
       - "80:80"
     depends_on:
       backend-api:
         condition: service_healthy
-    environment:
-      - ANGULAR_APP_API_URL=http://backend-api:8080/api
-      - ANGULAR_APP_PRODUCTION=true
-      - ANGULAR_APP_ENV=production
     networks:
       - app-network
     volumes:

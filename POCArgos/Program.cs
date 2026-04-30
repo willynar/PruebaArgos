@@ -33,6 +33,8 @@ builder.Services.AddCors(options =>
                         .AllowCredentials());
 });
 
+builder.Services.AddHealthChecks();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -42,7 +44,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// In Docker/Production behind a proxy, HTTPS is usually handled by the proxy (Nginx)
+// or not needed for internal traffic.
+// app.UseHttpsRedirection(); 
 
 app.UseCors("AllowAngularApp");
 
@@ -51,5 +55,6 @@ app.UseOutputCache();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHealthChecks("/health");
 
 app.Run();
