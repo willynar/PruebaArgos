@@ -7,7 +7,7 @@ import { environment } from './api.config';
 
 @Injectable({ providedIn: 'root' })
 export class PedidoService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   obtenerPedidos(): Observable<OrderDto[]> {
     return this.http.get<OrderDto[]>(`${environment.baseUrl}/Orders`);
@@ -20,7 +20,7 @@ export class PedidoService {
   crearPedido(order: OrderDto): Observable<OrderDto> {
     return this.http.post<OrderDto>(`${environment.baseUrl}/Orders`, order);
   }
-
+  //actualiza los pedidos  por el controlador  put
   guardarPedido(order: OrderDto): Observable<OrderDto> {
     return this.http.put<OrderDto>(`${environment.baseUrl}/Orders/${order.id}`, order)
       .pipe(

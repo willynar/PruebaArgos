@@ -5,6 +5,8 @@ export interface OrderDto {
   orderStatusId: number;
   orderStatus?: OrderStatusDto;
   shippingMethodId: number;
+  deliveryAddress: string;
+  internalComent: string;
   shippingMethod?: ShippingMethodDto;
   totalAmount: number;
   rowVersion?: string | null; // byte[] serializado como base64 — control de concurrencia (Optimistic Locking)

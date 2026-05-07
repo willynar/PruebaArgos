@@ -1,5 +1,5 @@
-using backend_vex.Configuration;
 using Microsoft.EntityFrameworkCore;
+using POCArgos.Configurations;
 using POCArgos.Models;
 
 var builder = WebApplication.CreateBuilder(args);

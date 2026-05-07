@@ -1,11 +1,8 @@
-using POCArgos.Interfaces;
+﻿using POCArgos.Interfaces;
 using POCArgos.Logic;
 
-namespace backend_vex.Configuration
+namespace POCArgos.Configurations
 {
-    /// <summary>
-    /// configuraciones necesarias para inyeccion de dependencias
-    /// </summary>
     public static class ConfigurationRepositories
     {
         #region ConfigureRepositories

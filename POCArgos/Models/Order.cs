@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore.Migrations;
 using System.ComponentModel.DataAnnotations;
 
 namespace POCArgos.Models;
@@ -14,6 +15,11 @@ public class Order
     public OrderStatus? OrderStatus { get; set; }
 
     public int ShippingMethodId { get; set; }
+
+    public string? DeliveryAddress { get; set; }
+
+    public string? InternalComent { get; set; }
+
     public ShippingMethod? ShippingMethod { get; set; }
 
     public decimal TotalAmount { get; set; }

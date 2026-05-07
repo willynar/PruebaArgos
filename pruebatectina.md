@@ -156,3 +156,7 @@ Invoices:	INVID1495347
 pasword: ixvb68hdz2
 usuario: PruebaArgos_db
 workstation id=PruebaArgos.mssql.somee.com;packet size=4096;user id=wnaranjoa_SQLLogin_1;pwd=ixvb68hdz2;data source=PruebaArgos.mssql.somee.com;persist security info=False;initial catalog=PruebaArgos;TrustServerCertificate=True
+
+inversion de dependencias patrones de diseño
+
+solid

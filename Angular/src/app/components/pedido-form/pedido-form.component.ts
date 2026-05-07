@@ -71,7 +71,7 @@ export class PedidoFormComponent implements OnInit {
   }
 
   private formularioVacio(): OrderDto {
-    return { id: 0, customerName: '', orderStatusId: 0, shippingMethodId: 0, totalAmount: 0, rowVersion: null };
+    return { id: 0, customerName: '', orderStatusId: 0, shippingMethodId: 0, totalAmount: 0, rowVersion: null ,deliveryAddress:'', internalComent: ''};
   }
 
   cargarPedidos() {
