@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using POCArgos.Domain.Entities;
 
-namespace POCArgos.Models;
+namespace POCArgos.Data;
 
 public class ApplicationDbContext : DbContext
 {

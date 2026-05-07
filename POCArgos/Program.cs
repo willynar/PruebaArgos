@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using POCArgos.Configurations;
-using POCArgos.Models;
+using POCArgos.Domain.Entities;
+using POCArgos.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

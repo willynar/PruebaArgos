@@ -1,4 +1,4 @@
-using POCArgos.Models;
+using POCArgos.Domain.Entities;
 
 namespace Test.Tests.Mocks
 {

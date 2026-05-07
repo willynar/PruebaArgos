@@ -1,11 +1,12 @@
-using POCArgos.Models;
+using POCArgos.Domain.Entities;
+using POCArgos.DTOs;
 
 namespace POCArgos.Interfaces;
 
 public interface IOrderService
 {
-    Task<List<Order>> GetOrdersAsync();
-    Task<Order?> GetOrderByIdAsync(int id);
-    Task<Order> CreateOrderAsync(Order order);
-    Task<bool> UpdateOrderAsync(int id, Order order);
+    Task<List<OrderDto>> GetOrdersAsync();
+    Task<OrderDto?> GetOrderByIdAsync(int id);
+    Task<OrderDto> CreateOrderAsync(OrderUpsertDto orderDto);
+    Task<bool> UpdateOrderAsync(int id, OrderUpsertDto orderDto);
 }

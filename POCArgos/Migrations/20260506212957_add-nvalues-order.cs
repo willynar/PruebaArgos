@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace POCArgos.Models
+namespace POCArgos.Migrations
 {
     /// <inheritdoc />
     public partial class addnvaluesorder : Migration

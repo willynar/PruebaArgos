@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
 using POCArgos.Interfaces;
-using POCArgos.Models;
+using POCArgos.Domain.Entities;
+using POCArgos.DTOs;
 
 namespace POCArgos.Controllers;
 

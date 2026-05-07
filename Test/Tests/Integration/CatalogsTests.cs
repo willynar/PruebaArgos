@@ -1,4 +1,5 @@
-using POCArgos.Logic;
+using POCArgos.Services;
+using POCArgos.Data.Repositories;
 using Test.Fixtures;
 using Test.Tests.Mocks;
 
@@ -11,7 +12,8 @@ namespace Test.Tests.Integration
         public async Task InitializeAsync()
         {
             await _fixture.InitializeAsync();
-            _catalogsService = new Catalogs(_fixture.DbContext);
+            var catalogRepository = new CatalogRepository(_fixture.DbContext);
+            _catalogsService = new Catalogs(catalogRepository);
         }
 
         public async Task DisposeAsync()

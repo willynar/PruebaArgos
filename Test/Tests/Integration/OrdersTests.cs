@@ -1,5 +1,7 @@
-using POCArgos.Logic;
-using POCArgos.Models;
+using POCArgos.Services;
+using POCArgos.Domain.Entities;
+using POCArgos.DTOs;
+using POCArgos.Data.Repositories;
 using Test.Fixtures;
 using Test.Tests.Mocks;
 
@@ -13,7 +15,8 @@ namespace Test.Tests.Integration
         public async Task InitializeAsync()
         {
             await _fixture.InitializeAsync();
-            _ordersService = new Orders(_fixture.DbContext);
+            var orderRepository = new OrderRepository(_fixture.DbContext);
+            _ordersService = new Orders(orderRepository);
         }
 
         public async Task DisposeAsync()
@@ -25,8 +28,9 @@ namespace Test.Tests.Integration
         public async Task CreateNewOrderInDatabase()
         {
             var newOrder = OrdersMock.CreateBasicOrder();
+            var upsertDto = MapToUpsertDto(newOrder);
 
-            var createdOrder = await _ordersService.CreateOrderAsync(newOrder);
+            var createdOrder = await _ordersService.CreateOrderAsync(upsertDto);
 
             Assert.NotNull(createdOrder);
             Assert.True(createdOrder.Id > 0);
@@ -34,12 +38,24 @@ namespace Test.Tests.Integration
             Assert.Equal(150.00m, createdOrder.TotalAmount);
         }
 
+        private OrderUpsertDto MapToUpsertDto(Order o) => new OrderUpsertDto
+        {
+            Id = o.Id,
+            CustomerName = o.CustomerName,
+            OrderStatusId = o.OrderStatusId,
+            ShippingMethodId = o.ShippingMethodId,
+            DeliveryAddress = o.DeliveryAddress,
+            TotalAmount = o.TotalAmount,
+            InternalComent = o.InternalComent,
+            RowVersion = o.RowVersion
+        };
+
         [Fact]
         public async Task RetrieveCreatedOrderById()
         {
             var newOrder = OrdersMock.CreateJohnSmithOrder();
 
-            var created = await _ordersService.CreateOrderAsync(newOrder);
+            var created = await _ordersService.CreateOrderAsync(MapToUpsertDto(newOrder));
             var retrieved = await _ordersService.GetOrderByIdAsync(created.Id);
 
             Assert.NotNull(retrieved);
@@ -53,13 +69,19 @@ namespace Test.Tests.Integration
         {
             var initialOrder = OrdersMock.CreateOrderForUpdate();
 
-            var created = await _ordersService.CreateOrderAsync(initialOrder);
+            var created = await _ordersService.CreateOrderAsync(MapToUpsertDto(initialOrder));
 
-            created.CustomerName = "Updated Name";
-            created.TotalAmount = 200.00m;
-            created.OrderStatusId = 2;
+            var upsertDto = new OrderUpsertDto
+            {
+                Id = created.Id,
+                CustomerName = "Updated Name",
+                TotalAmount = 200.00m,
+                OrderStatusId = 2,
+                ShippingMethodId = created.ShippingMethodId,
+                RowVersion = created.RowVersion
+            };
 
-            var updated = await _ordersService.UpdateOrderAsync(created.Id, created);
+            var updated = await _ordersService.UpdateOrderAsync(created.Id, upsertDto);
 
             Assert.True(updated);
 
@@ -76,8 +98,8 @@ namespace Test.Tests.Integration
             var order1 = OrdersMock.CreateCustomerOneOrder();
             var order2 = OrdersMock.CreateCustomerTwoOrder();
 
-            await _ordersService.CreateOrderAsync(order1);
-            await _ordersService.CreateOrderAsync(order2);
+            await _ordersService.CreateOrderAsync(MapToUpsertDto(order1));
+            await _ordersService.CreateOrderAsync(MapToUpsertDto(order2));
 
             var allOrders = await _ordersService.GetOrdersAsync();
 
@@ -86,10 +108,10 @@ namespace Test.Tests.Integration
 
             Assert.NotNull(retrievedOrder1);
             Assert.NotNull(retrievedOrder2);
-            Assert.NotNull(retrievedOrder1.OrderStatus);
-            Assert.NotNull(retrievedOrder1.ShippingMethod);
-            Assert.NotNull(retrievedOrder2.OrderStatus);
-            Assert.NotNull(retrievedOrder2.ShippingMethod);
+            Assert.NotNull(retrievedOrder1.OrderStatusName);
+            Assert.NotNull(retrievedOrder1.ShippingMethodName);
+            Assert.NotNull(retrievedOrder2.OrderStatusName);
+            Assert.NotNull(retrievedOrder2.ShippingMethodName);
         }
     }
 }

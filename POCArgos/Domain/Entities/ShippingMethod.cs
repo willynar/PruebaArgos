@@ -1,6 +1,6 @@
-namespace POCArgos.Models;
+namespace POCArgos.Domain.Entities;
 
-public class OrderStatus
+public class ShippingMethod
 {
     public int Id { get; set; }
     public string Name { get; set; } = null!;

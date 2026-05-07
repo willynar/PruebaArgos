@@ -1,4 +1,4 @@
-namespace POCArgos.Models;
+namespace POCArgos.DTOs;
 
 public class StsResponse
 {

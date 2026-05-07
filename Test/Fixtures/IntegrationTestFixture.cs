@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
-using POCArgos.Models;
+using POCArgos.Data;
 
 namespace Test.Fixtures
 {

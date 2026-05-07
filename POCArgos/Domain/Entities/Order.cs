@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using System.ComponentModel.DataAnnotations;
 
-namespace POCArgos.Models;
+namespace POCArgos.Domain.Entities;
 
 public class Order
 {
